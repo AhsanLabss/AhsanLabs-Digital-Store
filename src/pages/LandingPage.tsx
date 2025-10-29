@@ -73,7 +73,7 @@ export const LandingPage = ({ onProductClick, onViewProducts }: LandingPageProps
               Explore Products
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
             </button>
-            <a href="https://www.google.com/" className="bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 border-2 border-indigo-600 dark:border-indigo-500 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-indigo-50 dark:hover:bg-slate-700 transition-all w-full sm:w-auto" target='_blank'>Join Channel</a>
+            <a href="https://whatsapp.com/channel/0029Vb6cRL43GJOqdGUq4q0Q" className="bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 border-2 border-indigo-600 dark:border-indigo-500 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-indigo-50 dark:hover:bg-slate-700 transition-all w-full sm:w-auto" target='_blank'>Join Channel</a>
             {/* <button className="bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 border-2 border-indigo-600 dark:border-indigo-500 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-indigo-50 dark:hover:bg-slate-700 transition-all w-full sm:w-auto">
               
             </button> */}

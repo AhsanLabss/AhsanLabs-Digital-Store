@@ -369,7 +369,7 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
                       </button>
                     )}
 
-                    Free Download: Only if 100% discount
+                    {/* Free Download: Only if 100% discount */}
                     {isFree && (
                       <button
                         onClick={handleBuyNow}

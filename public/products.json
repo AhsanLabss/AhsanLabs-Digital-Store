@@ -19,14 +19,14 @@
       "2 TB storage",
       "plus premium benefits and discounts."
     ],
-    "offerEndsAt": "2025-11-06T00:00",
+    "offerEndsAt": "2025-11-06T06:00",
     "inStock": true,
     "whatsappNumber": "1234567890",
     "whatsappMessage": "Hi i want to buy Google Ai Plus Account",
     "productlink": "",
-    "is_scratch": false,
-    "scratch_disc": 0,
-    "scratch_coupon": "",
+    "is_scratch": true,
+    "scratch_disc": 20,
+    "scratch_coupon": "Gem",
     "specialcode": "GEMINI-DISC99",
     "specialdisc": 20
   },

@@ -121,7 +121,7 @@ export const LandingPage = ({ onProductClick, onViewProducts }: LandingPageProps
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
-              Featured Products
+              Featured Product
             </h2>
             <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg">Limited-time deals – don’t miss out!</p>
           </div>

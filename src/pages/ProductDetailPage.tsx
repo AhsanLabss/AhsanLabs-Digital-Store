@@ -66,12 +66,12 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
     const newFinalPrice = product!.price - discount;
     setFinalPrice(newFinalPrice);
 
-    // Auto-fill coupon code in input (for visual feedback)
+    // Auto-fill coupon code (for visual feedback only)
     setCouponCode(coupon.code);
 
     if (coupon.discount === 100) {
       setDownloadLink(`${product!.productlink}`);
-      setDiscountMessage(`Amazing! You've unlocked 100% OFF with a secret code!`);
+      setDiscountMessage(`Amazing! You've unlocked 100% OFF! Download link ready.`);
     } else {
       setDownloadLink('');
       setDiscountMessage(`Success! ${coupon.discount}% OFF applied. Final price: PKR ${newFinalPrice.toFixed(2)}`);
@@ -89,10 +89,10 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
       type: 'percentage',
     };
 
-    // Auto-apply the scratch coupon
+    // Auto-apply scratch coupon
     applyCoupon(scratchCoupon);
 
-    // Close modal after animation
+    // Auto-hide modal after animation
     setTimeout(() => {
       setShowScratchCard(false);
     }, 1500);
@@ -106,9 +106,11 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
     }
 
     const input = couponCode.trim().toLowerCase();
+
+    // Check predefined coupons
     let coupon = COUPONS.find((c) => c.code.toLowerCase() === input);
 
-    // Special code
+    // Check special code
     if (!coupon && product?.specialcode?.toLowerCase() === input && product.specialdisc) {
       coupon = { code: product.specialcode, discount: product.specialdisc, type: 'percentage' };
     }
@@ -178,6 +180,8 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
       </div>
     );
   }
+
+  const isFree = appliedCoupon?.discount === 100;
 
   return (
     <>
@@ -343,7 +347,8 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
 
                   {/* ACTION BUTTONS */}
                   <div className="flex gap-3 mb-6">
-                    {(!appliedCoupon || appliedCoupon.discount < 100) && (
+                    {/* Add to Cart: Only if not free */}
+                    {!isFree && (
                       <button
                         onClick={handleAddToCart}
                         className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all hover:scale-105 shadow-lg"
@@ -353,7 +358,8 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
                       </button>
                     )}
 
-                    {!downloadLink && (!appliedCoupon || appliedCoupon.discount < 100) && (
+                    {/* Buy Now: Only if not free */}
+                    {!isFree && !downloadLink && (
                       <button
                         onClick={handleBuyNow}
                         className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all hover:scale-105 shadow-lg"
@@ -363,7 +369,8 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
                       </button>
                     )}
 
-                    {downloadLink && (
+                    {/* Free Download: Only if 100% discount */}
+                    {isFree && (
                       <button
                         onClick={handleBuyNow}
                         className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all hover:scale-105 shadow-lg"

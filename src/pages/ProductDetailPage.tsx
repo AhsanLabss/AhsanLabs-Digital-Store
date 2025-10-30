@@ -6,7 +6,7 @@ import { ShareButtons } from '../components/ShareButtons';
 import { Modal } from '../components/Modal';
 import { ScratchCard } from '../components/ScratchCard';
 import { Confetti } from '../components/Confetti';
-import { ArrowLeft, Check, Copy, MessageCircle, ShoppingCart, Eye, Sparkles } from 'lucide-react';
+import { ArrowLeft, Check, Copy, Eye, Sparkles } from 'lucide-react';
 import { getRating, saveRating, addToCart, getCart } from '../utils/localStorage';
 
 interface ProductDetailPageProps {
@@ -66,12 +66,11 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
     const newFinalPrice = product!.price - discount;
     setFinalPrice(newFinalPrice);
 
-    // Auto-fill coupon code (for visual feedback only)
     setCouponCode(coupon.code);
 
     if (coupon.discount === 100) {
       setDownloadLink(`${product!.productlink}`);
-      setDiscountMessage(`Amazing! You've unlocked 100% OFF! Download link ready.`);
+      setDiscountMessage(`Congratulations! You've unlocked 100% OFF! Your download link is ready.`);
     } else {
       setDownloadLink('');
       setDiscountMessage(`Success! ${coupon.discount}% OFF applied. Final price: PKR ${newFinalPrice.toFixed(2)}`);
@@ -89,10 +88,8 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
       type: 'percentage',
     };
 
-    // Auto-apply scratch coupon
     applyCoupon(scratchCoupon);
 
-    // Auto-hide modal after animation
     setTimeout(() => {
       setShowScratchCard(false);
     }, 1500);
@@ -106,11 +103,8 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
     }
 
     const input = couponCode.trim().toLowerCase();
-
-    // Check predefined coupons
     let coupon = COUPONS.find((c) => c.code.toLowerCase() === input);
 
-    // Check special code
     if (!coupon && product?.specialcode?.toLowerCase() === input && product.specialdisc) {
       coupon = { code: product.specialcode, discount: product.specialdisc, type: 'percentage' };
     }
@@ -121,22 +115,6 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
     }
 
     applyCoupon(coupon);
-  };
-
-  const handleBuyNow = () => {
-    if (!product) return;
-
-    let message = '';
-    if (appliedCoupon && appliedCoupon.discount < 100) {
-      message = `Hi! ${discountMessage} I want to buy ${product.name}!`;
-    } else if (appliedCoupon && appliedCoupon.discount === 100) {
-      message = `Hi! I unlocked 100% OFF for ${product.name} and got the download link.`;
-    } else {
-      message = `${product.whatsappMessage} (Price: PKR ${product.price.toFixed(2)})`;
-    }
-    const whatsappNumber = '923343926359';
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
   };
 
   const copyDownloadLink = () => {
@@ -187,10 +165,8 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
     <>
       <Confetti active={showConfetti} onComplete={() => setShowConfetti(false)} />
 
-      {/* FULL PAGE GRADIENT BACKGROUND */}
       <div className="min-h-screen bg-gradient-to-b from-slate-50 via-indigo-50/30 to-white dark:from-slate-950 dark:via-indigo-950/20 dark:to-slate-900 text-slate-900 dark:text-slate-100">
 
-        {/* HERO SECTION WITH IMAGE */}
         <section className="relative pt-20 pb-12 px-4 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-pink-500/10 dark:from-indigo-500/5 dark:via-purple-500/5 dark:to-pink-500/5" />
           <div className="absolute top-10 left-10 w-72 h-72 bg-indigo-400/20 rounded-full blur-3xl animate-pulse" />
@@ -225,7 +201,6 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
                   </div>
                 </div>
 
-                {/* FEATURES */}
                 <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-3xl p-6 border border-slate-200 dark:border-slate-700 shadow-lg">
                   <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                     <Sparkles className="text-indigo-600 dark:text-indigo-400" size={22} />
@@ -270,14 +245,14 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
                   <div className="bg-gradient-to-r from-slate-50 to-indigo-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-6 mb-6 border border-slate-200 dark:border-slate-700">
                     <div className="flex items-baseline gap-3 mb-3">
                       <span className="text-4xl font-bold">
-                        PKR {appliedCoupon ? finalPrice.toFixed(2) : product.price.toLocaleString()}
+                        {isFree ? 'FREE' : `PKR ${appliedCoupon ? finalPrice.toFixed(2) : product.price.toLocaleString()}`}
                       </span>
-                      {product.originalPrice > product.price && (
+                      {product.originalPrice > product.price && !isFree && (
                         <span className="text-lg text-slate-500 line-through">
                           PKR {product.originalPrice.toLocaleString()}
                         </span>
                       )}
-                      {appliedCoupon && (
+                      {appliedCoupon && !isFree && (
                         <span className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md">
                           {appliedCoupon.discount}% OFF
                         </span>
@@ -290,6 +265,7 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
                       </div>
                     )}
 
+                    {/* COUPON INPUT */}
                     {!appliedCoupon && (
                       <div className="space-y-3 mt-4">
                         <div className="flex gap-2">
@@ -299,12 +275,12 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
                             onChange={(e) => setCouponCode(e.target.value)}
                             placeholder="Got a coupon? Enter here..."
                             disabled={!!appliedCoupon}
-                            className="flex-1 px-4 py-3 rounded-xl bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                            className="flex-1 px-4 py-3 rounded-xl bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm disabled:opacity-60"
                           />
                           <button
                             onClick={handleManualApply}
                             disabled={!!appliedCoupon}
-                            className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl font-semibold transition-all hover:scale-105 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl font-semibold transition-all hover:scale-105 shadow-md disabled:opacity-50"
                           >
                             Apply
                           </button>
@@ -323,22 +299,25 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
                       </div>
                     )}
 
-                    {downloadLink && (
-                      <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
-                        <p className="text-sm font-semibold text-blue-900 dark:text-blue-300 mb-2">Your Download Link:</p>
+                    {/* DOWNLOAD LINK (100% OFF) */}
+                    {isFree && downloadLink && (
+                      <div className="mt-6 p-5 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 rounded-2xl border border-green-200 dark:border-green-800">
+                        <p className="text-lg font-bold text-green-800 dark:text-green-300 mb-3 text-center">
+                          Your Download Link (100% OFF!)
+                        </p>
                         <div className="flex gap-2">
                           <input
                             type="text"
                             value={downloadLink}
                             readOnly
-                            className="flex-1 px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded text-sm font-mono"
+                            className="flex-1 px-4 py-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl text-sm font-mono"
                           />
                           <button
                             onClick={copyDownloadLink}
-                            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center gap-2"
+                            className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-semibold transition-all hover:scale-105 shadow-md flex items-center gap-2"
                           >
-                            {copied ? <Check size={16} /> : <Copy size={16} />}
-                            {copied ? 'Copied!' : 'Copy'}
+                            {copied ? <Check size={18} /> : <Copy size={18} />}
+                            {copied ? 'Copied!' : 'Copy Link'}
                           </button>
                         </div>
                       </div>
@@ -347,7 +326,7 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
 
                   {/* ACTION BUTTONS */}
                   <div className="flex gap-3 mb-6">
-                    {/* Add to Cart: Only if not free */}
+                    {/* Only show Add to Cart if not free */}
                     {!isFree && (
                       <button
                         onClick={handleAddToCart}
@@ -358,25 +337,17 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
                       </button>
                     )}
 
-                    {/* Buy Now: Only if not free */}
+                    {/* Only show Buy Now if not free and no download link */}
                     {!isFree && !downloadLink && (
                       <button
-                        onClick={handleBuyNow}
+                        onClick={() => {
+                          const message = `Hi! I want to buy ${product.name} (Price: PKR ${finalPrice.toFixed(2)})`;
+                          window.open(`https://wa.me/923343926359?text=${encodeURIComponent(message)}`, '_blank');
+                        }}
                         className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all hover:scale-105 shadow-lg"
                       >
                         <MessageCircle size={24} />
                         Buy Now
-                      </button>
-                    )}
-
-                    {/* Free Download: Only if 100% discount */}
-                    {isFree && (
-                      <button
-                        onClick={handleBuyNow}
-                        className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all hover:scale-105 shadow-lg"
-                      >
-                        <MessageCircle size={24} />
-                        Get Free Download
                       </button>
                     )}
                   </div>
@@ -395,18 +366,18 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
         </section>
       </div>
 
-      {/* SCRATCH CARD MODAL */}
-      <Modal isOpen={showScratchCard} onClose={() => setShowScratchCard(false)} title="Scratch to Reveal Discount!">
+      {/* SCRATCH MODAL */}
+      <Modal isOpen={showScratchCard} onClose={() => setShowScratchCard(false)} title="Scratch to Win!">
         <div className="flex flex-col items-center p-6">
           <p className="text-center mb-6 text-slate-600 dark:text-slate-400">
-            Scratch below to unlock your secret discount!
+            Scratch to reveal your secret discount!
           </p>
           <ScratchCard
             discount={product.scratch_disc}
             onComplete={handleScratchComplete}
           />
           <p className="mt-4 text-xs text-slate-500 dark:text-slate-400">
-            Coupon will be applied automatically!
+            Discount applies automatically!
           </p>
         </div>
       </Modal>

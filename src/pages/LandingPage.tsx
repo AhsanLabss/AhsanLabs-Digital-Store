@@ -80,7 +80,7 @@ export const LandingPage = ({ onProductClick, onViewProducts }: LandingPageProps
           </div>
 
           {/* ==== FEATURE BOXES – NOW COLORED & RESPONSIVE ==== */}
-          <div id="featured products" className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto px-4">
+          {/* <div id="featured products" className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto px-4">
             {[
               { icon: Zap, title: 'Instant Delivery', desc: 'Get your digital products immediately after purchase', color: 'indigo' },
               { icon: Shield, title: 'Money-Back Guarantee', desc: '30-day refund policy, no questions asked', color: 'emerald' },
@@ -113,7 +113,7 @@ export const LandingPage = ({ onProductClick, onViewProducts }: LandingPageProps
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </section>
 
       {/* ==== FEATURED PRODUCTS ==== */}

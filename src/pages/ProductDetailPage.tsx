@@ -370,7 +370,7 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
                     )}
 
                     {/* Free Download: Only if 100% discount */}
-                    {isFree && (
+                    {/* {isFree && (
                       <button
                         onClick={handleBuyNow}
                         className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all hover:scale-105 shadow-lg"
@@ -378,7 +378,7 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
                         <MessageCircle size={24} />
                         Get Free Download
                       </button>
-                    )}
+                    )} */}
                   </div>
 
                   {/* RATING */}

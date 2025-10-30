@@ -106,11 +106,9 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
     }
 
 const input = couponCode.trim().toLowerCase();
-let coupon = COUPONS.find((c) => c.code.toLowerCase() === input);
-
+let coupon = COUPONS.find((c) => c: string;
 if (!coupon && product?.specialcode?.toLowerCase() === input && product.specialdisc) {
   coupon = { code: product.specialcode, discount: product.specialdisc, type: 'percentage' };
-}
     }
 
     if (!coupon) {

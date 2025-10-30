@@ -105,10 +105,10 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
       return;
     }
 
-const input = couponCode.trim().toLowerCase();
-let coupon = COUPONS.find((c) => c: string;
-if (!coupon && product?.specialcode?.toLowerCase() === input && product.specialdisc) {
-  coupon = { code: product.specialcode, discount: product.specialdisc, type: 'percentage' };
+    const input = couponCode.trim().toLowerCase();
+    let coupon = COUPONS.find((c) => c: string;
+    if (!coupon && product?.specialcode?.toLowerCase() === input && product.specialdisc) {
+      coupon = { code: product.specialcode, discount: product.specialdisc, type: 'percentage' };
     }
 
     if (!coupon) {

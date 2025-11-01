@@ -158,23 +158,33 @@
   {
     "id": "6",
     "name": "ChatGpt Plus - 1 Month Method",
-    "description": "",
+    "description": "This guide shows you how to create a ChatGPT account smoothly and securely using a clean browser session and a temporary email for testing purposes. It walks you through entering your details, verifying your card when required, activating features, and managing your account settings properly. The method focuses on safe, legitimate signup practices, helping users avoid errors, ensure successful account creation, and maintain a secure, well-configured ChatGPT profile.",
     "price": 699.99,
     "originalPrice": 999.99,
     "image": "/images/gpt.jpeg",
     "category": "Methods",
     "rating": 0,
     "reviews": 0,
-    "features": [],
-    "offerEndsAt": "",
+    "features": [
+      "Easy signup steps",
+      "temp email usage for testing",
+      "secure account setup",
+      "incognito browsing for clean sessions",
+      "card verification guidance",
+      "subscription activation walkthrough",
+      "account management tips",
+      "security best-practices",
+      "and troubleshooting common signup errors."
+    ],
+    "offerEndsAt": "2026-10-31T23:38",
     "inStock": true,
     "whatsappNumber": "923343926359",
-    "whatsappMessage": "",
+    "whatsappMessage": "Hey I Want To Buy Chat Gpt Plus Tutorial",
     "productlink": "",
-    "is_scratch": false,
-    "scratch_disc": 0,
+    "is_scratch": true,
+    "scratch_disc": 20,
     "specialcode": "GPT-MONTH",
     "specialdisc": 100,
-    "scratch_coupon": ""
+    "scratch_coupon": "20-GPT"
   }
 ]

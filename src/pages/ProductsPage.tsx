@@ -11,9 +11,11 @@ interface ProductsPageProps {
 export const ProductsPage = ({ onProductClick }: ProductsPageProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [comparisonList, setComparisonList] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [visibleCount, setVisibleCount] = useState<number>(8);
 
   useEffect(() => {
     fetch('/products.json')
@@ -57,7 +59,12 @@ export const ProductsPage = ({ onProductClick }: ProductsPageProps) => {
     }
 
     setFilteredProducts(filtered);
+    setVisibleCount(8); // Reset visible count when filters change
   }, [selectedCategory, searchQuery, products]);
+
+  useEffect(() => {
+    setDisplayedProducts(filteredProducts.slice(0, visibleCount));
+  }, [filteredProducts, visibleCount]);
 
   const categories = ['All', ...Array.from(new Set(products.map((p) => p.category)))];
 
@@ -79,6 +86,10 @@ export const ProductsPage = ({ onProductClick }: ProductsPageProps) => {
   };
 
   const handleClearSearch = () => setSearchQuery('');
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 8);
+  };
 
   return (
     /* FULL-PAGE GRADIENT + ANIMATED BLOBS */
@@ -183,89 +194,103 @@ export const ProductsPage = ({ onProductClick }: ProductsPageProps) => {
       {/* === PRODUCT GRID === */}
       <section className="relative px-4 pb-24 z-10">
         <div className="max-w-7xl mx-auto">
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {filteredProducts.map((product) => {
-                const isInComparison = comparisonList.includes(product.id);
+          {displayedProducts.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {displayedProducts.map((product) => {
+                  const isInComparison = comparisonList.includes(product.id);
 
-                return (
-                  <div
-                    key={product.id}
-                    onClick={() => onProductClick(product.id)}
-                    className="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer"
+                  return (
+                    <div
+                      key={product.id}
+                      onClick={() => onProductClick(product.id)}
+                      className="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer"
+                    >
+                      <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800">
+                        <img
+                          src={product.image || '/images/placeholder.png'}
+                          alt={product.name}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                          }}
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center text-6xl font-bold text-slate-300 dark:text-slate-600 hidden">
+                          {product.name[0]}
+                        </div>
+
+                        {/* Comparison Button */}
+                        <button
+                          onClick={(e) => handleAddToComparison(product.id, e)}
+                          disabled={!isInComparison && comparisonList.length >= 4}
+                          className={`absolute top-4 left-4 p-2.5 rounded-xl transition-all shadow-lg ${
+                            isInComparison
+                              ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white'
+                              : 'bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800'
+                          } ${!isInComparison && comparisonList.length >= 4 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                          title={isInComparison ? 'Remove from comparison' : 'Add to comparison'}
+                        >
+                          <GitCompare size={18} />
+                        </button>
+
+                        {/* Discount Badge */}
+                        {product.originalPrice > product.price && (
+                          <div className="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-lg animate-pulse">
+                            SAVE {Math.round((1 - product.price / product.originalPrice) * 100)}%
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="p-6 space-y-3">
+                        <div className="inline-block bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 text-indigo-700 dark:text-indigo-400 px-3 py-1 rounded-full text-xs font-bold">
+                          {product.category}
+                        </div>
+
+                        <h3 className="font-bold text-lg line-clamp-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                          {product.name}
+                        </h3>
+
+                        <div className="flex items-center gap-2">
+                          <Rating rating={product.rating} size={16} readonly />
+                          <span className="text-sm text-slate-500 dark:text-slate-400">
+                            {product.reviews} reviews
+                          </span>
+                        </div>
+
+                        <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">
+                          {product.description}
+                        </p>
+
+                        <div className="flex items-center justify-between pt-2">
+                          <div>
+                            <span className="text-2xl font-bold">PKR {product.price.toLocaleString()}</span>
+                            {product.originalPrice > product.price && (
+                              <span className="text-sm text-slate-500 line-through ml-2">
+                                PKR {product.originalPrice.toLocaleString()}
+                              </span>
+                            )}
+                          </div>
+                          <Package className="text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" size={20} />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Load More Button */}
+              {filteredProducts.length > displayedProducts.length && (
+                <div className="text-center mt-12">
+                  <button
+                    onClick={handleLoadMore}
+                    className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800">
-                      <img
-                        src={product.image || '/images/placeholder.png'}
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                          e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                        }}
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center text-6xl font-bold text-slate-300 dark:text-slate-600 hidden">
-                        {product.name[0]}
-                      </div>
-
-                      {/* Comparison Button */}
-                      <button
-                        onClick={(e) => handleAddToComparison(product.id, e)}
-                        disabled={!isInComparison && comparisonList.length >= 4}
-                        className={`absolute top-4 left-4 p-2.5 rounded-xl transition-all shadow-lg ${
-                          isInComparison
-                            ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white'
-                            : 'bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800'
-                        } ${!isInComparison && comparisonList.length >= 4 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        title={isInComparison ? 'Remove from comparison' : 'Add to comparison'}
-                      >
-                        <GitCompare size={18} />
-                      </button>
-
-                      {/* Discount Badge */}
-                      {product.originalPrice > product.price && (
-                        <div className="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-lg animate-pulse">
-                          SAVE {Math.round((1 - product.price / product.originalPrice) * 100)}%
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="p-6 space-y-3">
-                      <div className="inline-block bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 text-indigo-700 dark:text-indigo-400 px-3 py-1 rounded-full text-xs font-bold">
-                        {product.category}
-                      </div>
-
-                      <h3 className="font-bold text-lg line-clamp-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                        {product.name}
-                      </h3>
-
-                      <div className="flex items-center gap-2">
-                        <Rating rating={product.rating} size={16} readonly />
-                        <span className="text-sm text-slate-500 dark:text-slate-400">
-                          {product.reviews} reviews
-                        </span>
-                      </div>
-
-                      <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">
-                        {product.description}
-                      </p>
-
-                      <div className="flex items-center justify-between pt-2">
-                        <div>
-                          <span className="text-2xl font-bold">PKR {product.price.toLocaleString()}</span>
-                          {product.originalPrice > product.price && (
-                            <span className="text-sm text-slate-500 line-through ml-2">
-                              PKR {product.originalPrice.toLocaleString()}
-                            </span>
-                          )}
-                        </div>
-                        <Package className="text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" size={20} />
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+                    Load More Products
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
             /* Empty State */
             <div className="text-center py-24">

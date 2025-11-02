@@ -186,5 +186,32 @@
     "specialcode": "GPT-MONTH",
     "specialdisc": 100,
     "scratch_coupon": "20-GPT"
+  },
+  {
+    "id": "7",
+    "name": "TelegramBot - Zong Otp Sender",
+    "description": "Automatically send repeated Zong OTPs through Telegram with minimal setup. Supports customizable OTP counts, real-time delivery monitoring, and efficient loop-based sending for testing or automation purposes. Designed for users who need continuous OTP dispatch directly via Telegram.",
+    "price": 799.99,
+    "originalPrice": 999.99,
+    "image": "",
+    "category": "Scripts",
+    "rating": 5,
+    "reviews": 200,
+    "features": [
+      "Loop-based Zong OTP sending",
+      "automatic repeat sending",
+      "customizable OTP count",
+      "quick generation and dispatch"
+    ],
+    "offerEndsAt": "2028-06-02T00:59",
+    "inStock": true,
+    "whatsappNumber": "923343926359",
+    "whatsappMessage": "",
+    "productlink": "",
+    "is_scratch": true,
+    "scratch_disc": 20,
+    "specialcode": "",
+    "specialdisc": 0,
+    "scratch_coupon": "20-Won"
   }
 ]

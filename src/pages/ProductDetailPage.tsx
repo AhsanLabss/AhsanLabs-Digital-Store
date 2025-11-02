@@ -71,10 +71,10 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
 
     if (coupon.discount === 100) {
       setDownloadLink(`${product!.productlink}`);
-      setDiscountMessage(`Amazing! You've unlocked 100% OFF! Download link ready.`);
+      setDiscountMessage(`Amazing! You've unlocked 100% OFF with Coupon Code: ${coupon.code}! Download link ready.`);
     } else {
       setDownloadLink('');
-      setDiscountMessage(`Success! ${coupon.discount}% OFF applied. Final price: PKR ${newFinalPrice.toFixed(2)}`);
+      setDiscountMessage(`Success! ${coupon.discount}% OFF applied with Coupon Code: "${coupon.code}" . Final price: PKR ${newFinalPrice.toFixed(2)}`);
     }
 
     setShowConfetti(true);

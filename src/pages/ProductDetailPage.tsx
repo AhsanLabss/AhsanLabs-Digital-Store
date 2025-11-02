@@ -74,7 +74,7 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
       setDiscountMessage(`Amazing! You've unlocked 100% OFF! Download link ready.`);
     } else {
       setDownloadLink('');
-      setDiscountMessage(`Success! ${coupon.discount}% OFF applied. Final price: PKR ${newFinalPrice.toFixed(2)} , Discount Code : ${coupon}`);
+      setDiscountMessage(`Success! ${coupon.discount}% OFF applied. Final price: PKR ${newFinalPrice.toFixed(2)}`);
     }
 
     setShowConfetti(true);

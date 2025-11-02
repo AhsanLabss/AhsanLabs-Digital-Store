@@ -1,6 +1,10 @@
-# TODO: Implement Admin Page for Product Management
+# TODO: Implement Pagination on ProductsPage
 
-- [x] Create src/pages/AdminPage.tsx with CRUD operations for products
-- [x] Update src/App.tsx to include 'admin' page routing
-- [x] Update src/components/Header.tsx to add navigation to admin page
-- [x] Test the admin interface by running server and frontend
+## Steps to Complete:
+- [x] Modify the filtering useEffect to set displayedProducts to the first visibleCount items from filteredProducts
+- [x] Add a new useEffect to update displayedProducts when visibleCount changes
+- [x] Reset visibleCount to 8 whenever filters (category or search) change
+- [x] Update the product grid to render displayedProducts instead of filteredProducts
+- [x] Add a "Load More" button below the product grid if there are more products to load
+- [x] Implement the button click handler to increment visibleCount by 8
+- [x] Test the pagination functionality and ensure filtering works correctly with pagination

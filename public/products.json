@@ -213,5 +213,27 @@
     "specialcode": "",
     "specialdisc": 0,
     "scratch_coupon": "20-Won"
+  },
+  {
+    "id": "8",
+    "name": "Chat Gpt Go Method",
+    "description": "",
+    "price": 599.99,
+    "originalPrice": 1199.99,
+    "image": "",
+    "category": "Methods",
+    "rating": 0,
+    "reviews": 0,
+    "features": [],
+    "offerEndsAt": "2025-12-19T22:42",
+    "inStock": true,
+    "whatsappNumber": "923343926359",
+    "whatsappMessage": "",
+    "productlink": "http://127.0.0.1:3000/admin.html",
+    "is_scratch": false,
+    "scratch_disc": 0,
+    "specialcode": "AHSANLABS",
+    "specialdisc": 100,
+    "scratch_coupon": ""
   }
 ]

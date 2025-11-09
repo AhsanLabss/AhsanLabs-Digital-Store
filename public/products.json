@@ -235,5 +235,27 @@
     "specialcode": "AHSANLABS",
     "specialdisc": 100,
     "scratch_coupon": ""
+  },
+  {
+    "id": "9",
+    "name": "Cloud Shell Rdp",
+    "description": "",
+    "price": 599.99,
+    "originalPrice": 899.99,
+    "image": "",
+    "category": "Methods",
+    "rating": 0,
+    "reviews": 0,
+    "features": [],
+    "offerEndsAt": "2025-12-30T20:46",
+    "inStock": true,
+    "whatsappNumber": "923343926359",
+    "whatsappMessage": "",
+    "productlink": "https://drive.google.com/drive/folders/1_HjAegK4Aji7vFOpsg4C78BHHxvGNHtJ?usp=sharing",
+    "is_scratch": false,
+    "scratch_disc": 0,
+    "specialcode": "FREE-RDP",
+    "specialdisc": 100,
+    "scratch_coupon": ""
   }
 ]

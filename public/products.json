@@ -163,8 +163,8 @@
     "originalPrice": 999.99,
     "image": "/images/gpt.webp",
     "category": "Methods",
-    "rating": 0,
-    "reviews": 0,
+    "rating": 5,
+    "reviews": 300,
     "features": [
       "Easy signup steps",
       "temp email usage for testing",
@@ -176,7 +176,7 @@
       "security best-practices",
       "and troubleshooting common signup errors."
     ],
-    "offerEndsAt": "2026-11-01T10:38",
+    "offerEndsAt": "2026-11-01T05:38",
     "inStock": true,
     "whatsappNumber": "923343926359",
     "whatsappMessage": "Hey I Want To Buy Chat Gpt Plus Tutorial",

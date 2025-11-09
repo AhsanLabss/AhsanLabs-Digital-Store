@@ -244,8 +244,8 @@
     "originalPrice": 899.99,
     "image": "/images/shellrdp.webp",
     "category": "Methods",
-    "rating": 0,
-    "reviews": 0,
+    "rating": 5,
+    "reviews": 150,
     "features": [
       "Safe & Isolated",
       "Full LXDE GUI",
@@ -258,7 +258,7 @@
       "Browser-Based Access",
       "Free to Use"
     ],
-    "offerEndsAt": "2025-12-30T05:46",
+    "offerEndsAt": "2025-12-30T00:46",
     "inStock": true,
     "whatsappNumber": "923343926359",
     "whatsappMessage": "",

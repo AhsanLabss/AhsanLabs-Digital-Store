@@ -284,7 +284,7 @@
     "description": "Lovable.dev Pro (100 credits) is a premium plan for rapidly building and exporting real, editable web apps from natural-language prompts. The Pro tier gives higher generation priority, more daily actions and exports, access to pro templates and integrations, commercial usage rights, and 100 consumption credits you can spend on extra builds, advanced features, or priority runs — ideal for designers, founders, and small dev teams who want fast prototypes that ship as real code.",
     "price": 699.99,
     "originalPrice": 1299.88,
-    "image": "",
+    "image": "/images/loveable.webp",
     "category": "Methods",
     "rating": 5,
     "reviews": 300,
@@ -310,7 +310,7 @@
       "role-based access controls",
       "regular backups and exports"
     ],
-    "offerEndsAt": "2025-11-30T21:07",
+    "offerEndsAt": "2025-11-30T16:07",
     "inStock": true,
     "whatsappNumber": "",
     "whatsappMessage": "",

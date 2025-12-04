@@ -78,7 +78,7 @@ export const CartModal = ({ isOpen, onClose }: CartModalProps) => {
         }
       }
     });
-    message += `\nTotal:  ${getTotalPrice().toFixed(2)}`;
+    message += `\nTotal: $ ${getTotalPrice().toFixed(2)}`;
 
     const whatsappNumber = '923343926359';
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;

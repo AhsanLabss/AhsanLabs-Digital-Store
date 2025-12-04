@@ -5,7 +5,7 @@
     "description": "Unlock more with Google’s Premium Plan: Get NotebookLM for smarter note-taking, 5x more audio overviews and sources, Whisk Animate to turn images into videos with Veo, and Gemini integration in Gmail, Docs, and more. Enjoy tools to write, organize, and visualize, plus 2 TB storage across Google Photos, Drive, and Gmail, along with expanded features and exclusive discounts.",
     "price": 3.5,
     "originalPrice": 5,
-    "image": "/images/gemini.webp",
+    "image": "/images/gemini.jpg",
     "category": "Premium Accounts",
     "rating": 4.8,
     "reviews": 234,
@@ -19,7 +19,7 @@
       "2 TB storage",
       "plus premium benefits and discounts."
     ],
-    "offerEndsAt": "2025-11-05T05:00",
+    "offerEndsAt": "2025-11-05T00:00",
     "inStock": true,
     "whatsappNumber": "1234567890",
     "whatsappMessage": "Hi i want to buy Google Ai Plus Account",

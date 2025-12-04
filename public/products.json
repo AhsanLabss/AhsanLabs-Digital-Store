@@ -276,5 +276,43 @@
     "specialcode": "FREE-RDP",
     "specialdisc": 100,
     "scratch_coupon": ""
+  },
+  {
+    "id": "9",
+    "name": "Visuals By Lalit Editing Pack",
+    "description": "The Visuals by Lalit Editing Pack is designed for creators who want to achieve professional, cinematic visuals with ease. This pack includes a curated collection of LUTs, presets, overlays, sound effects, transitions, and creative assets inspired by modern filmmaking styles. Perfect for YouTube creators, Instagram editors, travel filmmakers, and short-form content creators, this pack helps elevate your edits with vibrant colors, clean tones, and smooth cinematic looks. Compatible with major editing apps like CapCut, Premiere Pro, DaVinci Resolve, VN, After Effects, and more.",
+    "price": 4,
+    "originalPrice": 10,
+    "image": "",
+    "category": "Packs",
+    "rating": 5,
+    "reviews": 0,
+    "features": [
+      "Cinematic LUTs",
+      "Professional color presets",
+      "Smooth transitions",
+      "Motion graphics overlays",
+      "Lens flares and light leaks",
+      "Sound effects pack",
+      "Text and title templates",
+      "Vibrant color grading tools",
+      "Easy drag-and-drop assets",
+      "Beginner-friendly",
+      "Works on mobile and desktop editors",
+      "Compatible with CapCut/Premiere Pro/DaVinci Resolve/VN",
+      "High-resolution assets",
+      "Ideal for reels and short content",
+      "Perfect for travel and cinematic editing"
+    ],
+    "offerEndsAt": "2026-05-04T16:20",
+    "inStock": true,
+    "whatsappNumber": "",
+    "whatsappMessage": "",
+    "productlink": "https://drive.google.com/drive/folders/1tF0AUt9RIZdENTDJJa1fktPtzTdGslN6",
+    "is_scratch": false,
+    "scratch_disc": 0,
+    "specialcode": "VISUALS99",
+    "specialdisc": 100,
+    "scratch_coupon": ""
   }
 ]

@@ -132,7 +132,7 @@ export const ComparisonModal = ({ isOpen, onClose, onProductClick }: ComparisonM
                       <td key={product.id} className="p-2 sm:p-4">
                         <div className="flex items-baseline gap-1 sm:gap-2">
                           <span className="text-base sm:text-xl font-bold text-gray-900 dark:text-white">
-                            PKR {product.price}
+                            $ {product.price}
                           </span>
                           {product.originalPrice > product.price && (
                             <span className="text-xs sm:text-sm text-gray-500 line-through">

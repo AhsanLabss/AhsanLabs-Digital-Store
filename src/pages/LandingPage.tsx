@@ -159,7 +159,7 @@ export const LandingPage = ({ onProductClick, onViewProducts }: LandingPageProps
                   </p>
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="text-xl sm:text-2xl font-bold">PKR {product.price.toLocaleString()}</span>
+                      <span className="text-xl sm:text-2xl font-bold">$ {product.price.toLocaleString()}</span>
                       {product.originalPrice > product.price && (
                         <span className="text-xs sm:text-sm text-slate-500 line-through ml-2">PKR {product.originalPrice.toLocaleString()}</span>
                       )}

@@ -83,7 +83,7 @@ export const LandingPage = ({ onProductClick, onViewProducts }: LandingPageProps
           <div id="featured products" className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto px-4">
             {[
               { icon: Zap, title: 'Instant Delivery', desc: 'Get your digital products immediately after purchase', color: 'indigo' },
-              { icon: Shield, title: 'Money-Back Guarantee', desc: '3-day refund policy, If any issue In Product', color: 'emerald' },
+              { icon: Shield, title: 'Money-Back Guarantee', desc: '3-day refund policy, If any issue in Product', color: 'emerald' },
               { icon: TrendingUp, title: 'Premium Quality', desc: 'Handpicked products for maximum value', color: 'purple' },
             ].map((feature, i) => (
               <div

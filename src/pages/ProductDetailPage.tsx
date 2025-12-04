@@ -270,7 +270,7 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
                   <div className="bg-gradient-to-r from-slate-50 to-indigo-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-6 mb-6 border border-slate-200 dark:border-slate-700">
                     <div className="flex items-baseline gap-3 mb-3">
                       <span className="text-4xl font-bold">
-                        PKR {appliedCoupon ? finalPrice.toFixed(2) : product.price.toLocaleString()}
+                        $ {appliedCoupon ? finalPrice.toFixed(2) : product.price.toLocaleString()}
                       </span>
                       {product.originalPrice > product.price && (
                         <span className="text-lg text-slate-500 line-through">

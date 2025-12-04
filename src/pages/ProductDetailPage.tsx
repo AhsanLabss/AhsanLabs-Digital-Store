@@ -132,7 +132,7 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
     } else if (appliedCoupon && appliedCoupon.discount === 100) {
       message = `Hi! I unlocked 100% OFF for ${product.name} and got the download link.`;
     } else {
-      message = `*Hi I am interested to buy "${product.name}", (Price: $ ${product.price.toFixed(2)})`;
+      message = `*Hi I am interested to buy "${product.name}", (Price: $ ${product.price.toFixed(2)*})`;
     }
     const whatsappNumber = '923350194193';
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;

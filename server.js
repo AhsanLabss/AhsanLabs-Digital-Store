@@ -5,8 +5,11 @@ import { fileURLToPath } from "url";
 import cors from "cors";
 import multer from "multer";
 import { exec } from "child_process";
-import chokidar from "chokidar"; // 👈 Added for watching all files
+import chokidar from "chokidar";
 
+// -----------------------------
+// SETUP PATHS
+// -----------------------------
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -17,7 +20,9 @@ app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 const productsPath = path.join(__dirname, "public/products.json");
 
-// Default products (auto-create if missing)
+// -----------------------------
+// DEFAULT PRODUCTS (if file missing)
+// -----------------------------
 const defaultProducts = [
   {
     id: "1",
@@ -45,28 +50,50 @@ const defaultProducts = [
   },
 ];
 
-// If products.json doesn’t exist, create it
+// Auto-create file if missing
 if (!fs.existsSync(productsPath)) {
   fs.writeFileSync(productsPath, JSON.stringify(defaultProducts, null, 2));
   console.log("✅ Created default products.json");
 }
 
-// 🧩 Helper: Push changes to GitHub automatically
-function pushChangesToGitHub(commitMessage = "Auto update from server") {
+// -----------------------------
+// SAFE GIT AUTO-PUSH QUEUE SYSTEM
+// -----------------------------
+let isPushing = false;
+let pushQueue = [];
+
+function pushChangesToGitHub(commitMessage = "Auto update") {
+  pushQueue.push(commitMessage);
+  runPushQueue();
+}
+
+function runPushQueue() {
+  if (isPushing || pushQueue.length === 0) return;
+
+  isPushing = true;
+  const message = pushQueue.shift();
+
   exec(
-    `git add -A && git commit -m "${commitMessage}" && git push`,
+    `git add -A && git commit -m "${message}" && git push`,
     { env: { ...process.env, GIT_ASKPASS: "echo" } },
     (err, stdout, stderr) => {
       if (err) {
         console.error("❌ Git push error:", stderr || err);
-        return;
+      } else {
+        console.log("✅ Git push successful:\n", stdout);
       }
-      console.log("✅ Git push successful:\n", stdout);
+
+      isPushing = false;
+
+      // Delay next push to avoid GitHub rejecting parallel updates
+      setTimeout(runPushQueue, 700);
     }
   );
 }
 
-// 🖼 Multer config for image uploads (random number filename)
+// -----------------------------
+// MULTER IMAGE UPLOAD
+// -----------------------------
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const dir = path.join(__dirname, "public/images");
@@ -92,7 +119,11 @@ const upload = multer({
   },
 });
 
-// 📦 GET products
+// -----------------------------
+// API ROUTES
+// -----------------------------
+
+// GET products
 app.get("/api/products", (req, res) => {
   try {
     const data = fs.readFileSync(productsPath, "utf-8");
@@ -103,7 +134,7 @@ app.get("/api/products", (req, res) => {
   }
 });
 
-// 💾 POST update products
+// POST update products
 app.post("/api/products", (req, res) => {
   try {
     const updatedProducts = req.body;
@@ -117,7 +148,7 @@ app.post("/api/products", (req, res) => {
   }
 });
 
-// 🖼 Upload single image
+// Upload image
 app.post("/api/upload-image", upload.single("image"), (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: "No image uploaded" });
@@ -132,29 +163,55 @@ app.post("/api/upload-image", upload.single("image"), (req, res) => {
   }
 });
 
-// 👀 Watch ALL project files for any changes and auto-push
-const watcher = chokidar.watch(__dirname, {
-  ignored: /(^|[\/\\])\..|node_modules|\.git/, // ignore hidden + node_modules + .git
-  persistent: true,
-  ignoreInitial: true,
-});
+// -----------------------------
+// DEBOUNCED WATCHER (NO DUPLICATE TRIGGERS)
+// -----------------------------
+const debounceMap = {};
+
+function debounce(filePath, callback, delay = 800) {
+  clearTimeout(debounceMap[filePath]);
+  debounceMap[filePath] = setTimeout(() => callback(), delay);
+}
+
+// Watch ONLY relevant folders
+const watcher = chokidar.watch(
+  [
+    path.join(__dirname, "public/products.json"),
+    path.join(__dirname, "public/images"),
+    path.join(__dirname, "src"),
+  ],
+  {
+    ignored: /(^|[\/\\])\../, 
+    ignoreInitial: true,
+  }
+);
 
 watcher.on("change", (filePath) => {
-  console.log(`🔄 File changed: ${filePath}`);
-  pushChangesToGitHub(`🌀 Auto commit: ${path.basename(filePath)}`);
+  debounce(filePath, () => {
+    console.log(`🔄 File changed: ${filePath}`);
+    pushChangesToGitHub(`🌀 Auto commit: ${path.basename(filePath)}`);
+  });
 });
+
 watcher.on("add", (filePath) => {
-  console.log(`➕ File added: ${filePath}`);
-  pushChangesToGitHub(`📄 New file added: ${path.basename(filePath)}`);
+  debounce(filePath, () => {
+    console.log(`➕ File added: ${filePath}`);
+    pushChangesToGitHub(`📄 Added: ${path.basename(filePath)}`);
+  });
 });
+
 watcher.on("unlink", (filePath) => {
-  console.log(`❌ File deleted: ${filePath}`);
-  pushChangesToGitHub(`🗑 File deleted: ${path.basename(filePath)}`);
+  debounce(filePath, () => {
+    console.log(`❌ File deleted: ${filePath}`);
+    pushChangesToGitHub(`🗑 Deleted: ${path.basename(filePath)}`);
+  });
 });
 
-console.log("👀 Watching ALL project folders for changes...");
+console.log("👀 Watching project for safe changes...");
 
-// 🌍 Start server
+// -----------------------------
+// START SERVER
+// -----------------------------
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
   console.log(`🚀 Server running at http://localhost:${PORT}`)

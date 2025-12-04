@@ -72,7 +72,7 @@ export const CartModal = ({ isOpen, onClose }: CartModalProps) => {
       const product = getProductById(item.productId);
       if (product) {
         const price = item.discountedPrice || product.price;
-        message += `${product.name} (x${item.quantity}) - PKR ${(price * item.quantity).toFixed(2)}\n`;
+        message += `${product.name} (x${item.quantity}) - $ ${(price * item.quantity).toFixed(2)}\n`;
         if (item.appliedCoupon) {
           message += `  Applied coupon: ${item.appliedCoupon}\n`;
         }

@@ -32,12 +32,12 @@
   },
   {
     "id": "2",
-    "name": "Unlimited Gmail Method",
+    "name": "Netflix Account - 1 Month",
     "description": "The Unlimited Gmail Method allows you to create and manage unlimited Gmail accounts efficiently. Enjoy seamless access, smart filters, and auto-responders, with full support for attachments, security verification, and cross-device syncing. Perfect for users who need multiple accounts for work, business, or automation — all managed securely and effortlessly.",
-    "price": 499.99,
-    "originalPrice": 999.99,
+    "price": 2.5,
+    "originalPrice": 5,
     "image": "/images/gmail.webp",
-    "category": "Methods",
+    "category": "Premium Accounts",
     "rating": 4.8,
     "reviews": 234,
     "features": [
@@ -54,7 +54,7 @@
       "backup and restore options",
       "24/7 support and documentation."
     ],
-    "offerEndsAt": "2025-11-08T06:00",
+    "offerEndsAt": "2025-11-08T01:00",
     "inStock": true,
     "whatsappNumber": "1234567890",
     "whatsappMessage": "Hi i want to buy Unlimited Gmail Method",

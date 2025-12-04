@@ -176,7 +176,7 @@
     "price": 8,
     "originalPrice": 25,
     "image": "/images/bolt.png",
-    "category": "Methods",
+    "category": "Premium Accounts",
     "rating": 5,
     "reviews": 300,
     "features": [
@@ -195,7 +195,7 @@
       "Regular updates and improvements",
       "24/7 availability"
     ],
-    "offerEndsAt": "2026-11-01T00:38",
+    "offerEndsAt": "2026-10-31T19:38",
     "inStock": true,
     "whatsappNumber": "923343926359",
     "whatsappMessage": "Hey I Want To Buy Chat Gpt Plus Tutorial",
@@ -204,7 +204,7 @@
     "scratch_disc": 20,
     "specialcode": "GPT-MONTH",
     "specialdisc": 100,
-    "scratch_coupon": "20-GPT"
+    "scratch_coupon": "20-Bolt"
   },
   {
     "id": "7",

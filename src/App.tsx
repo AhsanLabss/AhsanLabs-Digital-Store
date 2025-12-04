@@ -94,7 +94,7 @@ function App() {
         />
 
         <FloatingWhatsApp
-          phoneNumber="923343926359"
+          phoneNumber="9233"
           message="Hi! I'm interested in your digital products"
         />
       </div>

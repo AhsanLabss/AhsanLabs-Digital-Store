@@ -136,7 +136,7 @@ export const ComparisonModal = ({ isOpen, onClose, onProductClick }: ComparisonM
                           </span>
                           {product.originalPrice > product.price && (
                             <span className="text-xs sm:text-sm text-gray-500 line-through">
-                              PKR {product.originalPrice}
+                              $ {product.originalPrice}
                             </span>
                           )}
                         </div>

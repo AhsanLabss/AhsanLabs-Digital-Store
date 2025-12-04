@@ -175,7 +175,7 @@ function AdminPage() {
                       className="w-full p-1 border rounded"
                     />
                   ) : (
-                    `PKR ${product.price.toFixed(2)}`
+                    `$ ${product.price.toFixed(2)}`
                   )}
                 </td>
                 <td className="border border-gray-300 p-2">

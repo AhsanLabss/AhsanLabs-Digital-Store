@@ -1,218 +1,318 @@
-import express from "express";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import cors from "cors";
-import multer from "multer";
-import { exec } from "child_process";
-import chokidar from "chokidar";
-
-// -----------------------------
-// SETUP PATHS
-// -----------------------------
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const app = express();
-app.use(express.json());
-app.use(cors());
-app.use("/images", express.static(path.join(__dirname, "public/images")));
-
-const productsPath = path.join(__dirname, "public/products.json");
-
-// -----------------------------
-// DEFAULT PRODUCTS (if file missing)
-// -----------------------------
-const defaultProducts = [
+[
   {
-    id: "1",
-    name: "Premium Digital Course",
-    description: "Master the fundamentals with our comprehensive digital course.",
-    price: 149.99,
-    originalPrice: 1000,
-    image: "/images/capcut.png",
-    category: "Education",
-    rating: 4.8,
-    reviews: 234,
-    inStock: true,
+    "id": "1",
+    "name": "Google Ai Pro Accounts",
+    "description": "Unlock more with Google’s Premium Plan: Get NotebookLM for smarter note-taking, 5x more audio overviews and sources, Whisk Animate to turn images into videos with Veo, and Gemini integration in Gmail, Docs, and more. Enjoy tools to write, organize, and visualize, plus 2 TB storage across Google Photos, Drive, and Gmail, along with expanded features and exclusive discounts.",
+    "price": 3.5,
+    "originalPrice": 5,
+    "image": "/images/gemini.jpg",
+    "category": "Premium Accounts",
+    "rating": 4.8,
+    "reviews": 234,
+    "features": [
+      "NotebookLM",
+      "5× more audio overviews",
+      "Whisk Animate",
+      "Veo video clips",
+      "Gemini in Gmail & Docs",
+      "smarter writing & organization",
+      "2 TB storage",
+      "plus premium benefits and discounts."
+    ],
+    "offerEndsAt": "2025-11-05T00:00",
+    "inStock": true,
+    "whatsappNumber": "1234567890",
+    "whatsappMessage": "Hi i want to buy Google Ai Plus Account",
+    "productlink": "",
+    "is_scratch": true,
+    "scratch_disc": 20,
+    "scratch_coupon": "Gem",
+    "specialcode": "GEMINI-DISC99",
+    "specialdisc": 20
   },
   {
-    id: "2",
-    name: "Pro Design Templates Pack",
-    description: "100+ professional templates for your business.",
-    price: 49.99,
-    originalPrice: 149.99,
-    image: "/images/ap.png",
-    category: "Design",
-    rating: 4.9,
-    reviews: 567,
-    inStock: true,
+    "id": "2",
+    "name": "Netflix Account - 1 Month",
+    "description": "Enjoy unlimited entertainment for 30 days with a Netflix 1-Month Account. Stream thousands of movies, TV series, documentaries, anime, and original content instantly on any supported device. With HD and even Ultra HD options (depending on plan), you can watch your favorite shows anytime, anywhere, without ads. Whether you're binge-watching new releases or discovering classics, Netflix offers a seamless experience with personalized recommendations and multi-device access.",
+    "price": 2.5,
+    "originalPrice": 5,
+    "image": "/images/net.jpg",
+    "category": "Premium Accounts",
+    "rating": 4.8,
+    "reviews": 234,
+    "features": [
+      "Unlimited streaming",
+      "Ad-free viewing",
+      "Access to movies and TV shows",
+      "Netflix Originals included",
+      "Multiple device support",
+      "Mobile and TV compatibility",
+      "Personalized recommendations",
+      "HD/Ultra HD streaming (plan-dependent)",
+      "Offline downloads (app only)",
+      "Family-friendly content profiles",
+      "Global content library",
+      "Easy account management",
+      "24/7 availability"
+    ],
+    "offerEndsAt": "2025-11-07T05:00",
+    "inStock": true,
+    "whatsappNumber": "1234567890",
+    "whatsappMessage": "Hi i want to buy Unlimited Gmail Method",
+    "productlink": "https://drive.google.com/drive/folders/1_cYFxNCWt6goa5qblW-UKMsMIToVkvy7?usp=sharing",
+    "is_scratch": false,
+    "scratch_disc": 20,
+    "scratch_coupon": "NETFLIX-2026",
+    "specialcode": "REACT-REWARD-99",
+    "specialdisc": 100
   },
-];
-
-// Auto-create file if missing
-if (!fs.existsSync(productsPath)) {
-  fs.writeFileSync(productsPath, JSON.stringify(defaultProducts, null, 2));
-  console.log("✅ Created default products.json");
-}
-
-// -----------------------------
-// SAFE GIT AUTO-PUSH QUEUE SYSTEM
-// -----------------------------
-let isPushing = false;
-let pushQueue = [];
-
-function pushChangesToGitHub(commitMessage = "Auto update") {
-  pushQueue.push(commitMessage);
-  runPushQueue();
-}
-
-function runPushQueue() {
-  if (isPushing || pushQueue.length === 0) return;
-
-  isPushing = true;
-  const message = pushQueue.shift();
-
-  exec(
-    `git add -A && git commit -m "${message}" && git push`,
-    { env: { ...process.env, GIT_ASKPASS: "echo" } },
-    (err, stdout, stderr) => {
-      if (err) {
-        console.error("❌ Git push error:", stderr || err);
-      } else {
-        console.log("✅ Git push successful:\n", stdout);
-      }
-
-      isPushing = false;
-
-      // Delay next push to avoid GitHub rejecting parallel updates
-      setTimeout(runPushQueue, 700);
-    }
-  );
-}
-
-// -----------------------------
-// MULTER IMAGE UPLOAD
-// -----------------------------
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = path.join(__dirname, "public/images");
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    cb(null, dir);
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const randomName = `${Date.now()}-${Math.floor(Math.random() * 1e9)}${ext}`;
-    cb(null, randomName);
-  },
-});
-
-const upload = multer({
-  storage,
-  fileFilter: (req, file, cb) => {
-    const types = /jpeg|jpg|png|gif|webp/;
-    const isValid =
-      types.test(file.mimetype) &&
-      types.test(path.extname(file.originalname).toLowerCase());
-    if (isValid) cb(null, true);
-    else cb(new Error("Only image files are allowed"));
-  },
-});
-
-// -----------------------------
-// API ROUTES
-// -----------------------------
-
-// GET products
-app.get("/api/products", (req, res) => {
-  try {
-    const data = fs.readFileSync(productsPath, "utf-8");
-    res.json(JSON.parse(data));
-  } catch (err) {
-    console.error("Error reading products:", err);
-    res.status(500).json({ error: "Failed to read products" });
-  }
-});
-
-// POST update products
-app.post("/api/products", (req, res) => {
-  try {
-    const updatedProducts = req.body;
-    fs.writeFileSync(productsPath, JSON.stringify(updatedProducts, null, 2));
-    console.log("✅ Products updated successfully");
-    pushChangesToGitHub("🛍 Updated products from admin panel");
-    res.json({ success: true });
-  } catch (err) {
-    console.error("Error updating products:", err);
-    res.status(500).json({ error: "Failed to update products" });
-  }
-});
-
-// Upload image
-app.post("/api/upload-image", upload.single("image"), (req, res) => {
-  try {
-    if (!req.file) return res.status(400).json({ error: "No image uploaded" });
-
-    const imageUrl = `/images/${req.file.filename}`;
-    console.log("📸 Uploaded:", imageUrl);
-    pushChangesToGitHub(`🖼 Uploaded new image: ${req.file.filename}`);
-    res.json({ imageUrl });
-  } catch (err) {
-    console.error("Image upload failed:", err);
-    res.status(500).json({ error: "Image upload failed" });
-  }
-});
-
-// -----------------------------
-// DEBOUNCED WATCHER (NO DUPLICATE TRIGGERS)
-// -----------------------------
-const debounceMap = {};
-
-function debounce(filePath, callback, delay = 800) {
-  clearTimeout(debounceMap[filePath]);
-  debounceMap[filePath] = setTimeout(() => callback(), delay);
-}
-
-// Watch ONLY relevant folders
-const watcher = chokidar.watch(
-  [
-    path.join(__dirname, "public/products.json"),
-    path.join(__dirname, "public/images"),
-    path.join(__dirname, "src"),
-  ],
   {
-    ignored: /(^|[\/\\])\../, 
-    ignoreInitial: true,
+    "id": "3",
+    "name": "Chat Gpt Go Account - 12 Months",
+    "description": "The ChatGPT Go Plan offers fast, reliable access to advanced AI capabilities for everyday tasks, study, work, and creativity. It provides improved response speed, higher availability during peak times, and access to enhanced features that go beyond the free tier. Ideal for students, professionals, and creators, the Go Plan helps you write, research, summarize, generate ideas, and solve problems with ease. Enjoy a smoother AI experience designed to boost productivity and efficiency.",
+    "price": 3,
+    "originalPrice": 5,
+    "image": "/images/gpt.jpg",
+    "category": "Premium Accounts",
+    "rating": 130,
+    "reviews": 250,
+    "features": [
+      "Fast response speed",
+      "Higher availability during peak times",
+      "Access to advanced AI features",
+      "Ideal for study and work tasks",
+      "Supports writing and research",
+      "Creative assistance tools",
+      "Multilingual support",
+      "Conversational AI interaction",
+      "Productivity enhancement",
+      "Easy-to-use interface",
+      "Cloud-based access across devices",
+      "Regular feature improvements"
+    ],
+    "offerEndsAt": "2026-06-26T05:25",
+    "inStock": true,
+    "whatsappNumber": "923343926359",
+    "whatsappMessage": "Hi i am intersted in your Overlay Pack",
+    "productlink": "",
+    "is_scratch": true,
+    "scratch_disc": 10,
+    "specialcode": "",
+    "specialdisc": 0,
+    "scratch_coupon": "GPTDISC99"
+  },
+  {
+    "id": "4",
+    "name": "Win 11 - RDP Method",
+    "description": "Experience Windows 11 on the cloud with this free RDP method. Enjoy lightning-fast 2 Gbps internet, 8 GB RAM, and 74 GB storage powered by an AMD processor. Each session lasts 6 hours, and you can reuse the method unlimited times for continuous access.",
+    "price": 5,
+    "originalPrice": 8,
+    "image": "/images/rdp.jpg",
+    "category": "Methods",
+    "rating": 500,
+    "reviews": 200,
+    "features": [
+      "Free Windows 11 RDP access",
+      "high-speed internet up to 2 Gbps",
+      "8 GB RAM",
+      "AMD processor",
+      "74 GB free storage",
+      "6-hour runtime",
+      "unlimited reuse method."
+    ],
+    "offerEndsAt": "2027-10-27T22:45",
+    "inStock": true,
+    "whatsappNumber": "923343925359",
+    "whatsappMessage": "",
+    "productlink": "https://whatsapp.com/channel/0029Vb6cRL43GJOqdGUq4q0Q/1126",
+    "is_scratch": true,
+    "scratch_disc": 100,
+    "specialcode": "",
+    "specialdisc": 0,
+    "scratch_coupon": "FREE-FOR-YOU"
+  },
+  {
+    "id": "5",
+    "name": "Capcut Pro - 1 Month",
+    "description": "Unlock your full creative potential with a CapCut Pro 1-Month Account. CapCut Pro provides premium video-editing tools, high-quality export options, and advanced effects that help you create professional-grade content effortlessly. Whether you're editing for social media, advertising, or personal projects, CapCut Pro delivers powerful features including AI tools, premium transitions, enhanced audio editing, and unlimited cloud storage. Enjoy a smooth, intuitive editing experience across mobile and desktop.",
+    "price": 4,
+    "originalPrice": 12,
+    "image": "/images/capcut.png",
+    "category": "Premium Accounts",
+    "rating": 4.7,
+    "reviews": 189,
+    "features": [
+      "Premium effects and filters",
+      "Advanced transitions",
+      "AI-powered editing tools",
+      "No watermark exports",
+      "1080p/4K high-quality exporting",
+      "Unlimited cloud storage",
+      "Premium fonts and templates",
+      "Advanced audio editing",
+      "Speed curve controls",
+      "Multi-layer editing",
+      "Background removal",
+      "Green screen support",
+      "Mobile and desktop compatibility",
+      "Smooth user interface",
+      "Ideal for content creators and social media editors"
+    ],
+    "offerEndsAt": "2026-10-06T10:05",
+    "inStock": true,
+    "whatsappNumber": "923343926359",
+    "whatsappMessage": "Hi! I'm interested in the Capcut Pro Apk",
+    "productlink": "https://drive.google.com/drive/folders/1tXzVUZFF5BpgERrPORS_O3Fh0lpCVcgV",
+    "specialcode": "CAPLABS",
+    "specialdisc": 100,
+    "is_scratch": false,
+    "scratch_disc": 0,
+    "scratch_coupon": ""
+  },
+  {
+    "id": "6",
+    "name": "Bolt Ai - 3 Months",
+    "description": "The BoltAI 3-Month Plan gives you extended access to a fast, reliable AI assistant built for productivity. BoltAI integrates seamlessly with your workflow on macOS, allowing you to generate text, summarize content, translate, draft emails, brainstorm ideas, and automate everyday tasks—all within a clean, powerful desktop interface. With the 3-month subscription, users enjoy premium features, faster responses, and enhanced tools designed to improve efficiency for work, study, and creative projects.",
+    "price": 8,
+    "originalPrice": 25,
+    "image": "/images/bolt.png",
+    "category": "Premium Accounts",
+    "rating": 5,
+    "reviews": 300,
+    "features": [
+      "Fast AI responses",
+      "macOS-integrated AI assistant",
+      "Premium tools and features",
+      "Supports writing and content creation",
+      "Advanced summarization",
+      "Translation assistance",
+      "Brainstorming and idea generation",
+      "Productivity-focused design",
+      "Clean and intuitive interface",
+      "Secure local app environment",
+      "Multi-purpose AI utility",
+      "Ideal for students and professionals",
+      "Regular updates and improvements",
+      "24/7 availability"
+    ],
+    "offerEndsAt": "2026-10-31T19:38",
+    "inStock": true,
+    "whatsappNumber": "923343926359",
+    "whatsappMessage": "Hey I Want To Buy Chat Gpt Plus Tutorial",
+    "productlink": "https://drive.google.com/drive/folders/12rb-WR-VjQllGz_TtK3K2hgd8C2TbG0F?usp=sharing",
+    "is_scratch": true,
+    "scratch_disc": 20,
+    "specialcode": "GPT-MONTH",
+    "specialdisc": 100,
+    "scratch_coupon": "20-Bolt"
+  },
+  {
+    "id": "7",
+    "name": "Lovable Ai - 100 Credits",
+    "description": "Get instant access to powerful AI-driven creation tools with a Lovable 100 Credits Account. Lovable helps you build websites, apps, content, and ideas quickly using an intuitive AI assistant designed for creators, developers, and entrepreneurs. With 100 credits, you can generate projects, refine designs, test concepts, and automate tasks without limits on creativity. Perfect for users who need flexible, on-demand AI support without a monthly subscription.",
+    "price": 6,
+    "originalPrice": 18,
+    "image": "/images/lovable.avif",
+    "category": "Premium Accounts",
+    "rating": 5,
+    "reviews": 200,
+    "features": [
+      "100 AI credits included",
+      "On-demand AI usage",
+      "Build apps and websites instantly",
+      "AI-assisted coding",
+      "Design generation tools",
+      "Content and idea creation",
+      "Intuitive user interface",
+      "Fast processing",
+      "Project editing and refinement",
+      "Developer-friendly tools",
+      "Supports prototypes and MVPs",
+      "Cloud-based access",
+      "Suitable for creators and entrepreneurs",
+      "No monthly commitment",
+      "Flexible credit usage"
+    ],
+    "offerEndsAt": "2028-06-01T04:59",
+    "inStock": true,
+    "whatsappNumber": "923343926359",
+    "whatsappMessage": "",
+    "productlink": "",
+    "is_scratch": true,
+    "scratch_disc": 20,
+    "specialcode": "",
+    "specialdisc": 0,
+    "scratch_coupon": "20-Won"
+  },
+  {
+    "id": "8",
+    "name": "Cloud Shell Rdp",
+    "description": "Instant Ubuntu Desktop in Browser via Google Cloud Shell, fully isolated, no login or credit card required, 100% free, accessible anywhere.",
+    "price": 8,
+    "originalPrice": 25,
+    "image": "/images/shellrdp.webp",
+    "category": "Methods",
+    "rating": 5,
+    "reviews": 150,
+    "features": [
+      "Safe & Isolated",
+      "Full LXDE GUI",
+      "Root Terminal Access",
+      "6+ Hours Session",
+      "Cloud-Based",
+      "No Installation Required",
+      "Quick Start & Full Setup Options",
+      "Ephemeral Containers",
+      "Browser-Based Access",
+      "Free to Use"
+    ],
+    "offerEndsAt": "2025-12-29T19:46",
+    "inStock": true,
+    "whatsappNumber": "923343926359",
+    "whatsappMessage": "",
+    "productlink": "https://drive.google.com/drive/folders/1_HjAegK4Aji7vFOpsg4C78BHHxvGNHtJ?usp=sharing",
+    "is_scratch": false,
+    "scratch_disc": 0,
+    "specialcode": "FREE-RDP",
+    "specialdisc": 100,
+    "scratch_coupon": ""
+  },
+  {
+    "id": "9",
+    "name": "Visuals By Lalit Editing Pack",
+    "description": "The Visuals by Lalit Editing Pack is designed for creators who want to achieve professional, cinematic visuals with ease. This pack includes a curated collection of LUTs, presets, overlays, sound effects, transitions, and creative assets inspired by modern filmmaking styles. Perfect for YouTube creators, Instagram editors, travel filmmakers, and short-form content creators, this pack helps elevate your edits with vibrant colors, clean tones, and smooth cinematic looks. Compatible with major editing apps like CapCut, Premiere Pro, DaVinci Resolve, VN, After Effects, and more.",
+    "price": 4,
+    "originalPrice": 10,
+    "image": "/images/lalit.png",
+    "category": "Packs",
+    "rating": 5,
+    "reviews": 0,
+    "features": [
+      "Cinematic LUTs",
+      "Professional color presets",
+      "Smooth transitions",
+      "Motion graphics overlays",
+      "Lens flares and light leaks",
+      "Sound effects pack",
+      "Text and title templates",
+      "Vibrant color grading tools",
+      "Easy drag-and-drop assets",
+      "Beginner-friendly",
+      "Works on mobile and desktop editors",
+      "Compatible with CapCut/Premiere Pro/DaVinci Resolve/VN",
+      "High-resolution assets",
+      "Ideal for reels and short content",
+      "Perfect for travel and cinematic editing"
+    ],
+    "offerEndsAt": "2026-05-04T11:20",
+    "inStock": true,
+    "whatsappNumber": "",
+    "whatsappMessage": "",
+    "productlink": "https://drive.google.com/drive/folders/1tF0AUt9RIZdENTDJJa1fktPtzTdGslN6",
+    "is_scratch": false,
+    "scratch_disc": 0,
+    "specialcode": "VISUALS99",
+    "specialdisc": 100,
+    "scratch_coupon": ""
   }
-);
-
-watcher.on("change", (filePath) => {
-  debounce(filePath, () => {
-    console.log(`🔄 File changed: ${filePath}`);
-    pushChangesToGitHub(`🌀 Auto commit: ${path.basename(filePath)}`);
-  });
-});
-
-watcher.on("add", (filePath) => {
-  debounce(filePath, () => {
-    console.log(`➕ File added: ${filePath}`);
-    pushChangesToGitHub(`📄 Added: ${path.basename(filePath)}`);
-  });
-});
-
-watcher.on("unlink", (filePath) => {
-  debounce(filePath, () => {
-    console.log(`❌ File deleted: ${filePath}`);
-    pushChangesToGitHub(`🗑 Deleted: ${path.basename(filePath)}`);
-  });
-});
-
-console.log("👀 Watching project for safe changes...");
-
-// -----------------------------
-// START SERVER
-// -----------------------------
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`🚀 Server running at http://localhost:${PORT}`)
-);
+]

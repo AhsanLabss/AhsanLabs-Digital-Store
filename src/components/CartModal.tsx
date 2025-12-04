@@ -187,7 +187,7 @@ export const CartModal = ({ isOpen, onClose }: CartModalProps) => {
               <div className="border-t border-gray-200 dark:border-gray-700 pt-3 sm:pt-4 mt-4 sm:mt-6">
                 <div className="flex justify-between items-center text-lg sm:text-xl font-bold">
                   <span>Total:</span>
-                  <span className="text-blue-600">PKR {getTotalPrice().toFixed(2)}</span>
+                  <span className="text-blue-600">$ {getTotalPrice().toFixed(2)}</span>
                 </div>
               </div>
 

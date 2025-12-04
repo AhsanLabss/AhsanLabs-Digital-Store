@@ -80,42 +80,39 @@ export const LandingPage = ({ onProductClick, onViewProducts }: LandingPageProps
           </div>
 
           {/* ==== FEATURE BOXES – NOW COLORED & RESPONSIVE ==== */}
-          <div id="featured-products" className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto px-4">
-  {[
-    { icon: Zap, title: 'Instant Deliver', desc: 'Get your digital products immediately after purchase', color: 'indigo' },
-    { icon: Shield, title: 'Money-Back Guarantee', desc: '3-day refund policy, If any issue in product', color: 'emerald' },
-    { icon: TrendingUp, title: 'Premium Quality', desc: 'Handpicked products for maximum value', color: 'purple' },
-  ].map((feature, i) => (
-    <div
-      key={i}
-      className="group bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-4 sm:p-6 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 hover:shadow-xl hover:scale-105 transition-all duration-300 text-center"
-    >
-      
-      {/* Center Icon */}
-      <div
-        className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform
-          bg-${feature.color}-100 dark:bg-${feature.color}-900/30`}
-      >
-        <feature.icon
-          className={`text-${feature.color}-600 dark:text-${feature.color}-400`}
-          size={24}
-        />
-      </div>
+          <div id="featured products" className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto px-4">
+            {[
+              { icon: Zap, title: 'Instant Delivery', desc: 'Get your digital products immediately after purchase', color: 'indigo' },
+              { icon: Shield, title: 'Money-Back Guarantee', desc: '3-day refund policy, If any issue in product', color: 'emerald' },
+              { icon: TrendingUp, title: 'Premium Quality', desc: 'Handpicked products for maximum value', color: 'purple' },
+            ].map((feature, i) => (
+              <div
+                key={i}
+                className="group bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-4 sm:p-6 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 hover:shadow-xl hover:scale-105 transition-all duration-300"
+              >
+                {/* Icon with responsive colour */}
+                <div
+                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform
+                    bg-${feature.color}-100 dark:bg-${feature.color}-900/30`}
+                >
+                  <feature.icon
+                    className={`text-${feature.color}-600 dark:text-${feature.color}-400`}
+                    size={24}
+                  />
+                </div>
 
-      {/* Title */}
-      <h3 className="text-lg sm:text-xl font-bold mb-2 text-slate-900 dark:text-white">
-        {feature.title}
-      </h3>
+                {/* Title – bold & coloured */}
+                <h3 className="text-lg sm:text-xl font-bold mb-2 text-slate-900 dark:text-white">
+                  {feature.title}
+                </h3>
 
-      {/* Description */}
-      <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-        {feature.desc}
-      </p>
-
-    </div>
-  ))}
-</div>
-
+                {/* Description – readable */}
+                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {feature.desc}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

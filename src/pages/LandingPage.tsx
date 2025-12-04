@@ -161,7 +161,7 @@ export const LandingPage = ({ onProductClick, onViewProducts }: LandingPageProps
                     <div>
                       <span className="text-xl sm:text-2xl font-bold">$ {product.price.toLocaleString()}</span>
                       {product.originalPrice > product.price && (
-                        <span className="text-xs sm:text-sm text-slate-500 line-through ml-2">PKR {product.originalPrice.toLocaleString()}</span>
+                        <span className="text-xs sm:text-sm text-slate-500 line-through ml-2">$ {product.originalPrice.toLocaleString()}</span>
                       )}
                     </div>
                     <ArrowRight className="text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all" size={16} />

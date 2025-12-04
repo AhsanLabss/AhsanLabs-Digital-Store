@@ -212,7 +212,7 @@
     "description": "Automatically send repeated Zong OTPs through Telegram with minimal setup. Supports customizable OTP counts, real-time delivery monitoring, and efficient loop-based sending for testing or automation purposes. Designed for users who need continuous OTP dispatch directly via Telegram.",
     "price": 6,
     "originalPrice": 18,
-    "image": "/images/zongbomb.webp",
+    "image": "/images/lovable.webp",
     "category": "Premium Accounts",
     "rating": 5,
     "reviews": 200,
@@ -222,7 +222,7 @@
       "customizable OTP count",
       "quick generation and dispatch"
     ],
-    "offerEndsAt": "2028-06-01T19:59",
+    "offerEndsAt": "2028-06-01T14:59",
     "inStock": true,
     "whatsappNumber": "923343926359",
     "whatsappMessage": "",

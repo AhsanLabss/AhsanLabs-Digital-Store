@@ -233,13 +233,12 @@
     "specialdisc": 0,
     "scratch_coupon": "20-Won"
   },
-  
   {
     "id": "8",
     "name": "Cloud Shell Rdp",
     "description": "Instant Ubuntu Desktop in Browser via Google Cloud Shell, fully isolated, no login or credit card required, 100% free, accessible anywhere.",
-    "price": 599.99,
-    "originalPrice": 899.99,
+    "price": 8,
+    "originalPrice": 25,
     "image": "/images/shellrdp.webp",
     "category": "Methods",
     "rating": 5,
@@ -256,7 +255,7 @@
       "Browser-Based Access",
       "Free to Use"
     ],
-    "offerEndsAt": "2025-12-30T00:46",
+    "offerEndsAt": "2025-12-29T19:46",
     "inStock": true,
     "whatsappNumber": "923343926359",
     "whatsappMessage": "",
@@ -267,5 +266,4 @@
     "specialdisc": 100,
     "scratch_coupon": ""
   }
-  
 ]

@@ -267,7 +267,7 @@ export const ProductsPage = ({ onProductClick }: ProductsPageProps) => {
                             <span className="text-2xl font-bold">PKR {product.price.toLocaleString()}</span>
                             {product.originalPrice > product.price && (
                               <span className="text-sm text-slate-500 line-through ml-2">
-                                PKR {product.originalPrice.toLocaleString()}
+                                $ {product.originalPrice.toLocaleString()}
                               </span>
                             )}
                           </div>

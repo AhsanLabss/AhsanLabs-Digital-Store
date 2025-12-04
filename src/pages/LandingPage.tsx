@@ -410,7 +410,7 @@ export const LandingPage = ({ onProductClick, onViewProducts }: LandingPageProps
             </div>
           </div>
           <div className="border-t border-slate-800 pt-6 text-center text-sm text-slate-500">
-            <p>&copy; {new Date().getFullYear()} AhsanLabs. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} AhsanLab. All rights reserved.</p>
           </div>
         </div>
       </footer>

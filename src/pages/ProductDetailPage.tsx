@@ -274,7 +274,7 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
                       </span>
                       {product.originalPrice > product.price && (
                         <span className="text-lg text-slate-500 line-through">
-                          PKR {product.originalPrice.toLocaleString()}
+                          $ {product.originalPrice.toLocaleString()}
                         </span>
                       )}
                       {appliedCoupon && (

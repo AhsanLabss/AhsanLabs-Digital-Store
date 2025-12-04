@@ -280,7 +280,7 @@ export const LandingPage = ({ onProductClick, onViewProducts }: LandingPageProps
               <div className="space-y-5">
                 {[
                   { icon: Mail, label: 'Email', value: 'ahsanlabsstore@gmail.com', color: 'indigo' },
-                  { icon: Phone, label: 'Phone', value: '+923350194193', color: 'purple' },
+                  { icon: Phone, label: 'Phone', value: '+923343926359', color: 'purple' },
                   { icon: MapPin, label: 'Location', value: 'Pakistan', color: 'emerald' },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-4">

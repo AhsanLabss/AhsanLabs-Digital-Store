@@ -264,7 +264,7 @@ export const ProductsPage = ({ onProductClick }: ProductsPageProps) => {
 
                         <div className="flex items-center justify-between pt-2">
                           <div>
-                            <span className="text-2xl font-bold">PKR {product.price.toLocaleString()}</span>
+                            <span className="text-2xl font-bold">$ {product.price.toLocaleString()}</span>
                             {product.originalPrice > product.price && (
                               <span className="text-sm text-slate-500 line-through ml-2">
                                 $ {product.originalPrice.toLocaleString()}

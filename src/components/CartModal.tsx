@@ -171,7 +171,7 @@ export const CartModal = ({ isOpen, onClose }: CartModalProps) => {
                     </div>
 
                     <div className="text-right">
-                      <p className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">PKR {itemTotal.toFixed(2)}</p>
+                      <p className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">$ {itemTotal.toFixed(2)}</p>
                     </div>
 
                     <button

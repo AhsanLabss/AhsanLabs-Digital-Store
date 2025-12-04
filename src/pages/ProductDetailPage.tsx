@@ -134,7 +134,7 @@ export const ProductDetailPage = ({ productId, onBack }: ProductDetailPageProps)
     } else {
       message = `${product.whatsappMessage} (Price: $ ${product.price.toFixed(2)})`;
     }
-    const whatsappNumber = '923343926359';
+    const whatsappNumber = '923';
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };

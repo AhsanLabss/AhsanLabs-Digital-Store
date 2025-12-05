@@ -353,7 +353,7 @@
     "name": "Chat Gpt Buisness - 1 Month",
     "description": "ChatGPT Team/Business is a monthly subscription plan designed for companies, offering secure collaboration, higher usage limits, advanced AI models, admin controls, and enhanced privacy for teams.",
     "price": 5,
-    "originalPrice": 0,
+    "originalPrice": 20,
     "image": "/images/gpt.webp",
     "category": "Premium Accounts",
     "rating": 10,
@@ -373,7 +373,7 @@
       "larger context window for long projects",
       "collaboration tools for documents & tasks"
     ],
-    "offerEndsAt": "2025-12-12T23:25",
+    "offerEndsAt": "2025-12-12T18:25",
     "inStock": true,
     "whatsappNumber": "",
     "whatsappMessage": "",

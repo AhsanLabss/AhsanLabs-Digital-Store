@@ -319,7 +319,7 @@
     "id": "10",
     "name": "Chat Gpt Plus Account - 1 Month",
     "description": "ChatGPT Plus is a premium subscription plan that provides faster performance, access to advanced models, and additional tools compared to the free version.",
-    "price": 3,
+    "price": 4,
     "originalPrice": 6,
     "image": "/images/gpt.webp",
     "category": "Premium Accounts",
@@ -337,7 +337,7 @@
       "improved memory features",
       "ability to create and use custom GPTs"
     ],
-    "offerEndsAt": "2025-12-13T18:18",
+    "offerEndsAt": "2025-12-13T13:18",
     "inStock": true,
     "whatsappNumber": "",
     "whatsappMessage": "",

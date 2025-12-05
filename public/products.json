@@ -347,5 +347,41 @@
     "specialcode": "",
     "specialdisc": 0,
     "scratch_coupon": "Plus99"
+  },
+  {
+    "id": "11",
+    "name": "Chat Gpt Buisness - 1 Month",
+    "description": "ChatGPT Team/Business is a monthly subscription plan designed for companies, offering secure collaboration, higher usage limits, advanced AI models, admin controls, and enhanced privacy for teams.",
+    "price": 5,
+    "originalPrice": 0,
+    "image": "/images/gpt.webp",
+    "category": "Premium Accounts",
+    "rating": 10,
+    "reviews": 250,
+    "features": [
+      "shared team workspace",
+      "higher message limits",
+      "access to advanced models (GPT-5 / GPT-4o)",
+      "fast and reliable performance",
+      "team admin dashboard",
+      "user management controls",
+      "centralized billing",
+      "enhanced data privacy & security",
+      "unlimited file uploads & analysis",
+      "advanced image generation",
+      "priority access to new business features",
+      "larger context window for long projects",
+      "collaboration tools for documents & tasks"
+    ],
+    "offerEndsAt": "2025-12-12T23:25",
+    "inStock": true,
+    "whatsappNumber": "",
+    "whatsappMessage": "",
+    "productlink": "",
+    "is_scratch": false,
+    "scratch_disc": 0,
+    "specialcode": "",
+    "specialdisc": 0,
+    "scratch_coupon": ""
   }
 ]
